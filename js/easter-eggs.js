@@ -10,13 +10,6 @@ easterEggStyle.textContent = `
         pointer-events: none;
         overflow: hidden;
         isolation: isolate;
-        background: rgba(0, 0, 0, 0.88);
-        animation: eggFadeIn .5s ease;
-    }
-
-    @keyframes eggFadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
     }
 
     .egg-rain-item {
@@ -27,8 +20,14 @@ easterEggStyle.textContent = `
         will-change: transform;
     }
 
+    .egg-rain-item,
+    .egg-giant,
+    .egg-particle {
+        filter: drop-shadow(0 0 8px rgba(57, 255, 136, 0.55));
+    }
+
     .egg-duck {
-        filter: grayscale(1) brightness(0);
+        filter: brightness(0) drop-shadow(0 0 3px #39ff88) drop-shadow(0 0 12px rgba(57, 255, 136, 0.55));
     }
 
     @keyframes eggRainFall {

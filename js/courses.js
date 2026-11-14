@@ -34,8 +34,8 @@ function badges(course) {
             <span class="badge" ${attrs(course.level)}>${course.level.en}</span>`;
 }
 
-function renderCourses() {
-    document.getElementById("coursesGrid").innerHTML = COURSES.map((c, i) => `
+function renderCourses(filter = "all") {
+    document.getElementById("coursesGrid").innerHTML = COURSES.filter(c => filter === "all" || c.type === filter).map((c, i) => `
         <article class="course-card${c.featured ? " featured-card" : ""}" tabindex="0" role="button" data-course="${c.id}">
             <div class="course-top"><span class="course-number">0${i + 1}</span><span class="course-icon">${c.icon}</span></div>
             <div class="course-art"><span class="art-symbol">${c.symbol}</span><span class="art-code">${c.code}</span></div>
@@ -92,10 +92,20 @@ courseModal.addEventListener("click", e => { if (e.target === courseModal) hideC
 document.addEventListener("keydown", e => { if (e.key === "Escape") hideCourse(); });
 document.addEventListener("languagechange", () => {
     if (openCourseId) fillCourseModal(COURSES.find(c => c.id === openCourseId));
-    document.getElementById("footerWhatsapp").href = whatsappUrl(generalMessage());
+    const wa = whatsappUrl(generalMessage());
+    document.getElementById("footerWhatsapp").href = wa;
+    document.getElementById("waFloat").href = wa;
 });
 
 document.getElementById("contactButton").addEventListener("click", e => {
     e.preventDefault();
     window.open(whatsappUrl(generalMessage()), "_blank", "noopener");
+});
+
+document.getElementById("courseFilters").addEventListener("click", e => {
+    const chip = e.target.closest("[data-filter]");
+    if (!chip) return;
+    document.querySelectorAll("#courseFilters [data-filter]").forEach(x => x.classList.toggle("active", x === chip));
+    renderCourses(chip.dataset.filter);
+    setLanguage(currentLang());
 });
