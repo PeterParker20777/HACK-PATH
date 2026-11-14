@@ -46,11 +46,11 @@ body[dir="rtl"] .signature { align-items: flex-start; padding: 0 0 88px 28px; }
 @media (prefers-reduced-motion: reduce) { .sig-name, .sig-thread { animation: none; } }
 @media (max-width: 700px) { .signature { align-items: flex-start; padding: 0 0 88px; } .sig-name { font-size: 17px; } }
 
-/* Black duck badge next to the language switch */
-.nav-tools { order: -1; display: flex; align-items: stretch; gap: 10px; flex-wrap: nowrap; }
+/* Black duck button next to the language switch */
+.nav-tools { order: -1; display: flex; align-items: stretch; gap: 8px; flex-wrap: nowrap; }
 .nav-tools .language-switch { order: 0; }
-.duck-badge { min-width: 52px; aspect-ratio: 1 / 1; align-self: stretch; flex: none; display: grid; place-items: center; border: 1px solid var(--green); background: rgba(57, 255, 136, 0.06); box-shadow: 0 0 14px rgba(57, 255, 136, 0.25), inset 0 0 10px rgba(57, 255, 136, 0.1); font-size: 30px; line-height: 1; background-color: #000; transition: box-shadow .3s; }
-.duck-badge { font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
-.duck-badge:hover { box-shadow: 0 0 24px rgba(57, 255, 136, 0.5), inset 0 0 14px rgba(57, 255, 136, 0.18); }
-@media (max-width: 700px) { .duck-badge { min-width: 40px; font-size: 22px; } .nav-tools { gap: 7px; } }
-.duck-icon { display: block; filter: brightness(0) drop-shadow(0 0 2px #39ff88) drop-shadow(0 0 7px rgba(57, 255, 136, 0.6)); }
+.duck-badge { flex: none; align-self: stretch; min-width: 48px; display: grid; place-items: center; padding: 0 6px; border: 0; background: none; cursor: pointer; font-size: 34px; line-height: 1; font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; transition: transform .25s; }
+.duck-badge:hover { transform: translateY(-2px) scale(1.12) rotate(-6deg); }
+.duck-badge:focus-visible { outline: 1px dashed var(--green); outline-offset: 4px; }
+.duck-icon { display: block; filter: brightness(0) drop-shadow(0 0 1.5px #39ff88) drop-shadow(0 0 6px rgba(57, 255, 136, 0.7)); }
+@media (max-width: 700px) { .duck-badge { min-width: 36px; font-size: 26px; } .nav-tools { gap: 5px; } }
