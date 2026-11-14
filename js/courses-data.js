@@ -1,7 +1,7 @@
 /* Courses data: add or edit courses here (type: "free" | "paid") */
 const COURSES = [
   {
-    id: "python-basics", icon: "{ }", symbol: "Py", code: 'print("Hello World")', type: "free",
+    id: "python-basics", icon: "{ }", symbol: "Py", code: 'print("Hello World")', type: "paid",
     category: { en: "PROGRAMMING", ar: "برمجة" },
     level: { en: "Beginner", ar: "مبتدئ" },
     title: { en: "PYTHON BASICS", ar: "أساسيات بايثون" },
