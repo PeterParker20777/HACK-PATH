@@ -17,7 +17,7 @@ if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-mot
         });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll(".section-heading, .course-filters, .course-card, .about-visual, .about-content, .feature, .contact-box").forEach((el, i) => {
+    document.querySelectorAll(".section-heading, .course-filters, .course-card, .about-visual, .about-content, .feature, .contact-box, .team-card").forEach((el, i) => {
         el.classList.add("reveal");
         el.style.animationDelay = `${(i % 3) * 90}ms`;
         observer.observe(el);
