@@ -34,8 +34,8 @@ function badges(course) {
             <span class="badge" ${attrs(course.level)}>${course.level.en}</span>`;
 }
 
-function renderCourses(filter = "all") {
-    document.getElementById("coursesGrid").innerHTML = COURSES.filter(c => filter === "all" || c.type === filter).map((c, i) => `
+function courseCard(c, i) {
+    return `
         <article class="course-card${c.featured ? " featured-card" : ""}" tabindex="0" role="button" data-course="${c.id}">
             <div class="course-top"><span class="course-number">0${i + 1}</span><span class="course-icon">${c.icon}</span></div>
             <div class="course-art"><span class="art-symbol">${c.symbol}</span><span class="art-code">${c.code}</span></div>
@@ -46,7 +46,32 @@ function renderCourses(filter = "all") {
                 <p ${attrs(c.desc)}>${c.desc.en}</p>
                 <span class="course-link"><span data-en="VIEW DETAILS" data-ar="التفاصيل">VIEW DETAILS</span><span>↗</span></span>
             </div>
-        </article>`).join("");
+        </article>`;
+}
+
+function renderCourses(filter = "all") {
+    document.getElementById("coursesGrid").innerHTML = CATEGORIES.map((cat, n) => {
+        const all = COURSES.filter(c => c.track === cat.id);
+        const shown = all.filter(c => filter === "all" || c.type === filter);
+        const count = { en: `${shown.length} COURSE${shown.length === 1 ? "" : "S"}`, ar: `${shown.length} كورس` };
+        const empty = all.length
+            ? { en: "NO MATCHING COURSES", ar: "لا توجد كورسات مطابقة" }
+            : { en: "COMING SOON", ar: "قريباً" };
+        return `
+        <section class="category-block">
+            <div class="category-head">
+                <span class="category-number">0${n + 1}</span>
+                <div>
+                    <h3 class="category-title" ${attrs(cat.title)}>${cat.title.en}</h3>
+                    <p class="category-desc" ${attrs(cat.desc)}>${cat.desc.en}</p>
+                </div>
+                <span class="category-count" ${attrs(count)}>${count.en}</span>
+            </div>
+            ${shown.length
+                ? `<div class="courses-grid">${shown.map(courseCard).join("")}</div>`
+                : `<div class="category-empty" ${attrs(empty)}>${empty.en}</div>`}
+        </section>`;
+    }).join("");
 }
 
 const courseModal = document.getElementById("courseModal");
