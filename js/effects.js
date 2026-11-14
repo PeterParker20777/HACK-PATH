@@ -30,3 +30,5 @@ signature.addEventListener("click", triggerSpider);
 signature.addEventListener("keydown", e => {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); triggerSpider(); }
 });
+
+document.getElementById("duckBadge").addEventListener("click", () => createEasterEgg("blackduck"));
