@@ -1,0 +1,61 @@
+/* Courses data: add or edit courses here (type: "free" | "paid") */
+const COURSES = [
+  {
+    id: "python-basics", icon: "{ }", symbol: "Py", code: 'print("Hello World")', type: "free",
+    category: { en: "PROGRAMMING", ar: "برمجة" },
+    level: { en: "Beginner", ar: "مبتدئ" },
+    title: { en: "PYTHON BASICS", ar: "أساسيات بايثون" },
+    desc: { en: "Learn the fundamentals of Python and write your first programs step by step.", ar: "اتعلم أساسيات Python وابدأ تكتب أول برامجك خطوة بخطوة." },
+    modules: [
+      { en: "Variables and data types", ar: "المتغيرات وأنواع البيانات" },
+      { en: "Conditions and loops", ar: "الشروط والتكرار" },
+      { en: "Functions", ar: "الدوال" },
+      { en: "Lists and dictionaries", ar: "القوائم والقواميس" },
+      { en: "Files and error handling", ar: "الملفات ومعالجة الأخطاء" },
+      { en: "Mini projects", ar: "مشاريع صغيرة" }
+    ],
+    learn: [
+      { en: "Write and run Python programs on your own", ar: "تكتب وتشغّل برامج بايثون بنفسك" },
+      { en: "Think like a programmer and solve problems", ar: "تفكر زي المبرمج وتحل المشاكل" },
+      { en: "Build a base for cybersecurity scripting", ar: "تبني أساس لكتابة سكريبتات الأمن السيبراني" }
+    ]
+  },
+  {
+    id: "cyber-basics", icon: "⌁", symbol: "⌘", code: "ACCESS_GRANTED();", type: "free", featured: true,
+    category: { en: "CYBERSECURITY", ar: "الأمن السيبراني" },
+    level: { en: "Beginner", ar: "مبتدئ" },
+    title: { en: "BASICS OF CYBER SECURITY", ar: "أساسيات الأمن السيبراني" },
+    desc: { en: "The fundamentals you need before anything else in cybersecurity: networks, Linux, encryption and the web.", ar: "الأساسيات اللي محتاجها قبل أي حاجة في الأمن السيبراني: الشبكات ولينكس والتشفير والويب." },
+    modules: [
+      { en: "Networking Basics", ar: "أساسيات الشبكات" },
+      { en: "Linux", ar: "لينكس" },
+      { en: "Cryptography", ar: "التشفير" },
+      { en: "Web Basics", ar: "أساسيات الويب" }
+    ],
+    learn: [
+      { en: "How networks and the internet really work", ar: "إزاي الشبكات والإنترنت بتشتغل فعلاً" },
+      { en: "Work comfortably in the Linux terminal", ar: "تتعامل بسهولة مع الـ Terminal في لينكس" },
+      { en: "Understand hashing and encryption", ar: "تفهم الـ Hashing والتشفير" }
+    ]
+  },
+  {
+    id: "web-pentest", icon: "⌘", symbol: "</>", code: "GET /login HTTP/1.1", type: "paid",
+    category: { en: "CYBERSECURITY", ar: "الأمن السيبراني" },
+    level: { en: "Intermediate", ar: "متوسط" },
+    title: { en: "WEB APPLICATION PENETRATION TESTING", ar: "اختبار اختراق تطبيقات الويب" },
+    desc: { en: "Learn how web applications are tested for weaknesses, using legal labs and responsible disclosure only.", ar: "اتعلم إزاي بتتفحص تطبيقات الويب لاكتشاف الثغرات، باستخدام معامل قانونية والإفصاح المسؤول فقط." },
+    modules: [
+      { en: "Web security and HTTP technologies", ar: "أمن الويب وتقنيات HTTP" },
+      { en: "Testing methodology", ar: "منهجية الاختبار" },
+      { en: "Authentication and authorization", ar: "المصادقة والصلاحيات" },
+      { en: "Input validation and common vulnerabilities", ar: "فحص المدخلات والثغرات الشائعة" },
+      { en: "Security testing tools and practical labs", ar: "أدوات الفحص والمعامل العملية" },
+      { en: "Reporting and documentation", ar: "كتابة التقارير والتوثيق" }
+    ],
+    learn: [
+      { en: "Analyze web vulnerabilities in authorized environments", ar: "تحلل ثغرات الويب في بيئات مصرّح بها" },
+      { en: "Follow a professional testing methodology", ar: "تتبع منهجية اختبار احترافية" },
+      { en: "Write clear security reports", ar: "تكتب تقارير أمنية واضحة" }
+    ]
+  }
+];

@@ -1,0 +1,13 @@
+/* Course badges, course details modal, cards as buttons */
+.course-card { cursor: pointer; }
+.course-card:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.course-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.badge { padding: 3px 10px; border: 1px solid var(--border); color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.badge.free { border-color: var(--green); color: var(--green); }
+.badge.paid { border-color: #ffc857; color: #ffc857; }
+.course-modal .modal-box { max-width: 620px; max-height: 90vh; overflow-y: auto; text-align: start; }
+.course-modal h3 { margin: 6px 0; }
+.course-modal h4 { margin: 18px 0 8px; color: var(--green); font-family: var(--mono); font-size: 13px; letter-spacing: 2px; }
+.cm-list { margin: 0; padding-inline-start: 22px; color: var(--text); line-height: 1.8; }
+.cm-list li::marker { color: var(--green); }
+.course-modal .primary-button { margin-top: 22px; }
