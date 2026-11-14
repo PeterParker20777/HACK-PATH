@@ -1264,3 +1264,217 @@ body[dir="rtl"] .hero-visual {
         animation-iteration-count: 1 !important;
     }
 }
+
+
+/* CYBER PATH COURSE UPDATE */
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.course-modules {
+    display: grid;
+    gap: 8px;
+    margin-top: 17px;
+    padding: 13px 14px;
+    border: 1px solid rgba(57,255,136,0.12);
+    background: rgba(57,255,136,0.025);
+    color: #9aafa0;
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+.course-modules span::before {
+    content: ">";
+    color: var(--green);
+    margin-inline-end: 8px;
+}
+
+.course-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.course-price {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 11px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .7px;
+}
+
+.free-price {
+    color: #041008;
+    background: var(--green);
+}
+
+.paid-price {
+    color: #f0c66e;
+    border: 1px solid rgba(240,198,110,.45);
+    background: rgba(240,198,110,.08);
+}
+
+.course-access {
+    color: #829087;
+    font-family: var(--mono);
+    font-size: 8px;
+    text-align: end;
+}
+
+.paid-art {
+    background:
+        linear-gradient(rgba(57,255,136,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57,255,136,0.04) 1px, transparent 1px),
+        linear-gradient(135deg, #10170e, #08110b 65%, #171307);
+    background-size: 22px 22px, 22px 22px, auto;
+}
+
+.paid-art .art-symbol {
+    color: #f0c66e;
+    text-shadow: 0 0 25px rgba(240,198,110,.3);
+}
+
+.paid-art .art-code {
+    color: #bca66f;
+}
+
+.modal-details {
+    display: grid;
+    gap: 8px;
+    margin: 0 0 24px;
+    text-align: start;
+}
+
+.modal-module {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 11px 13px;
+    background: rgba(57,255,136,.045);
+    border: 1px solid rgba(57,255,136,.12);
+    color: #c5d5ca;
+    font-size: 13px;
+}
+
+.modal-module span {
+    color: var(--green);
+    font-family: var(--mono);
+    font-size: 10px;
+}
+
+.nav-actions .menu-toggle span {
+    display: block;
+    width: 23px;
+    height: 2px;
+    margin: 5px 0;
+    background: var(--green);
+    transition: .25s;
+}
+
+@media (max-width: 900px) {
+    .courses-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .nav-actions {
+        gap: 9px;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 81px;
+        left: 0;
+        right: 0;
+        padding: 20px 6%;
+        background: rgba(5,8,7,.98);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-login {
+        padding: 9px 11px;
+        font-size: 8px;
+    }
+
+    .menu-toggle {
+        display: block;
+        padding: 5px;
+    }
+
+    .courses-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-info p {
+        min-height: 0;
+    }
+
+    .course-meta {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .course-access {
+        text-align: start;
+    }
+
+    .footer-bottom {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 18px 0;
+    }
+}
+
+body[dir="rtl"] .course-modules {
+    font-family: var(--arabic);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+body[dir="rtl"] .course-category,
+body[dir="rtl"] .course-number,
+body[dir="rtl"] .course-price,
+body[dir="rtl"] .course-access {
+    letter-spacing: 0;
+}
+
+body[dir="rtl"] .course-info h3 {
+    font-family: var(--arabic);
+    font-size: 19px;
+    font-weight: 900;
+    line-height: 1.6;
+}
+
+body[dir="rtl"] .course-info p {
+    font-family: var(--arabic);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+body[dir="rtl"] .modal-module {
+    font-family: var(--arabic);
+    font-size: 14px;
+    font-weight: 700;
+}
