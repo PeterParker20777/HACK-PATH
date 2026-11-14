@@ -31,17 +31,17 @@
 .filter-chip.active { background: var(--green); border-color: var(--green); color: #031008; font-weight: 700; }
 
 /* Signature */
-.signature { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; padding: 0 28px 64px 0; cursor: pointer; user-select: none; }
+.signature { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; padding: 0 28px 88px 0; cursor: pointer; user-select: none; }
 .sig-kicker { color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: 3px; }
 .sig-name { position: relative; font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: 3px; background: linear-gradient(100deg, #39ff88 20%, #eafff1 45%, #39ff88 70%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 8px rgba(57, 255, 136, 0.45)); animation: sigShine 4s linear infinite; }
 .sig-name::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: linear-gradient(90deg, transparent, var(--green)); box-shadow: 0 0 8px var(--green); }
-.sig-end { position: relative; display: inline-block; }
-.sig-thread { position: absolute; top: calc(100% + 7px); left: 50%; width: 1px; height: 38px; background: linear-gradient(#39ff88, rgba(237, 247, 239, 0.8)); transform-origin: top center; animation: sigSwing 4.2s ease-in-out infinite; transition: height .6s cubic-bezier(.3, 1.6, .5, 1); }
-.sig-spider { position: absolute; top: 100%; left: 50%; transform: translate(-50%, -3px); font-size: 17px; line-height: 1; filter: drop-shadow(0 0 6px rgba(57, 255, 136, 0.7)); -webkit-text-fill-color: initial; }
+.sig-line { position: relative; display: inline-block; }
+.sig-thread { position: absolute; top: calc(100% + 8px); right: 7px; width: 1px; height: 38px; background: linear-gradient(#39ff88, rgba(237, 247, 239, 0.8)); transform-origin: top center; animation: sigSwing 4.2s ease-in-out infinite; transition: height .6s cubic-bezier(.3, 1.6, .5, 1); }
+.sig-spider { position: absolute; top: 100%; left: 50%; transform: translate(-50%, -3px); font-size: 17px; line-height: 1; filter: drop-shadow(0 0 6px rgba(57, 255, 136, 0.7)); }
 .signature:hover .sig-thread, .signature:focus-visible .sig-thread { height: 54px; }
 .signature:focus-visible { outline: 1px dashed var(--green); outline-offset: 6px; }
-body[dir="rtl"] .signature { align-items: flex-start; padding: 0 0 64px 28px; }
+body[dir="rtl"] .signature { align-items: flex-start; padding: 0 0 88px 28px; }
 @keyframes sigShine { to { background-position: -220% 0; } }
 @keyframes sigSwing { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
 @media (prefers-reduced-motion: reduce) { .sig-name, .sig-thread { animation: none; } }
-@media (max-width: 700px) { .signature { align-items: flex-start; padding: 0 0 64px; } .sig-name { font-size: 17px; } }
+@media (max-width: 700px) { .signature { align-items: flex-start; padding: 0 0 88px; } .sig-name { font-size: 17px; } }
