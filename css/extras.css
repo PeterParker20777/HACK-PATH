@@ -45,3 +45,12 @@ body[dir="rtl"] .signature { align-items: flex-start; padding: 0 0 88px 28px; }
 @keyframes sigSwing { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
 @media (prefers-reduced-motion: reduce) { .sig-name, .sig-thread { animation: none; } }
 @media (max-width: 700px) { .signature { align-items: flex-start; padding: 0 0 88px; } .sig-name { font-size: 17px; } }
+
+/* Black duck badge next to the language switch */
+.nav-tools { order: -1; display: flex; align-items: center; gap: 10px; }
+.nav-tools .language-switch { order: 0; }
+.duck-badge { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--green); background: rgba(57, 255, 136, 0.06); box-shadow: 0 0 14px rgba(57, 255, 136, 0.25), inset 0 0 10px rgba(57, 255, 136, 0.1); font-size: 24px; line-height: 1; transition: box-shadow .3s; }
+.duck-badge { font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
+.duck-badge:hover { box-shadow: 0 0 24px rgba(57, 255, 136, 0.5), inset 0 0 14px rgba(57, 255, 136, 0.18); }
+@media (max-width: 700px) { .duck-badge { width: 36px; height: 36px; font-size: 20px; } .nav-tools { gap: 7px; } }
+.duck-icon { display: block; filter: brightness(0) drop-shadow(0 0 2px #39ff88) drop-shadow(0 0 7px rgba(57, 255, 136, 0.6)); }
