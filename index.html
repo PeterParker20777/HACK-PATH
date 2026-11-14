@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="css/extras.css">
 </head>
 <body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">💬<span data-en="CHAT WITH US" data-ar="كلمنا">CHAT WITH US</span></a>
 
     <canvas id="matrix"></canvas>
     <div class="background-overlay"></div>
@@ -127,6 +129,12 @@
                    data-ar="ابدأ من الأساسيات، طوّر مهاراتك، واكتشف بنفسك إيه اللي تقدر تحققه.">
                     Start with the fundamentals. Build your skills. Discover what you can create.
                 </p>
+            </div>
+
+            <div class="course-filters" id="courseFilters">
+                <button class="filter-chip active" data-filter="all" data-en="ALL" data-ar="الكل">ALL</button>
+                <button class="filter-chip" data-filter="free" data-en="FREE" data-ar="مجاني">FREE</button>
+                <button class="filter-chip" data-filter="paid" data-en="PAID" data-ar="مدفوع">PAID</button>
             </div>
 
             <div class="courses-grid" id="coursesGrid"></div>
@@ -250,8 +258,9 @@
                 © 2026 CYBER PATH. ALL RIGHTS RESERVED.
             </span>
 
-            <div class="signature">
-                <span>Made By PeterParke<span class="signature-anchor">r<span class="spider-thread"><span class="spider">🕷️</span></span></span></span>
+            <div class="signature" id="signature" role="button" tabindex="0" aria-label="Made By PeterParker">
+                <span class="sig-kicker">// MADE BY</span>
+                <span class="sig-name">PeterParke<span class="sig-end">r<span class="sig-thread"><span class="sig-spider">🕷️</span></span></span></span>
             </div>
         </div>
     </footer>
@@ -292,6 +301,7 @@
     <script src="js/i18n.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/modal.js"></script>
+    <script src="js/effects.js"></script>
     <script src="js/easter-eggs.js"></script>
 </body>
 </html>
