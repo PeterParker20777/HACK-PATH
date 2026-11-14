@@ -1,412 +1,362 @@
+const matrixCanvas = document.getElementById("matrix");
+const matrixContext = matrixCanvas.getContext("2d");
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-
-const characters = "アァイィウヴエェオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]<>/\\";
-const fontSize = 14;
-
-let columns = 0;
-let drops = [];
-let matrixWidth = 0;
-let matrixHeight = 0;
+const matrixCharacters = "アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&";
+let matrixFontSize = 14;
+let matrixColumns = 0;
+let matrixDrops = [];
 
 function resizeMatrix() {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    matrixCanvas.width = Math.floor(window.innerWidth * ratio);
+    matrixCanvas.height = Math.floor(window.innerHeight * ratio);
+    matrixCanvas.style.width = `${window.innerWidth}px`;
+    matrixCanvas.style.height = `${window.innerHeight}px`;
+    matrixContext.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    matrixWidth = window.innerWidth;
-    matrixHeight = window.innerHeight;
-
-    canvas.width = matrixWidth * ratio;
-    canvas.height = matrixHeight * ratio;
-
-    canvas.style.width = `${matrixWidth}px`;
-    canvas.style.height = `${matrixHeight}px`;
-
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-    columns = Math.floor(matrixWidth / fontSize);
-    drops = Array.from(
-        { length: columns },
-        () => Math.random() * (matrixHeight / fontSize)
-    );
+    matrixColumns = Math.ceil(window.innerWidth / matrixFontSize);
+    matrixDrops = Array.from({ length: matrixColumns }, () => Math.random() * -80);
 }
 
 function drawMatrix() {
-    ctx.fillStyle = "rgba(5, 8, 7, 0.075)";
-    ctx.fillRect(0, 0, matrixWidth, matrixHeight);
+    matrixContext.fillStyle = "rgba(5, 8, 7, 0.075)";
+    matrixContext.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    matrixContext.font = `${matrixFontSize}px monospace`;
+    matrixContext.fillStyle = "#39ff88";
 
-    ctx.font = `${fontSize}px monospace`;
+    for (let i = 0; i < matrixDrops.length; i++) {
+        const character = matrixCharacters[Math.floor(Math.random() * matrixCharacters.length)];
+        const x = i * matrixFontSize;
+        const y = matrixDrops[i] * matrixFontSize;
 
-    for (let i = 0; i < drops.length; i++) {
-        const character = characters.charAt(
-            Math.floor(Math.random() * characters.length)
-        );
+        matrixContext.fillText(character, x, y);
 
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
-
-        ctx.fillStyle = Math.random() > 0.975
-            ? "rgba(150, 255, 190, 0.9)"
-            : "rgba(57, 255, 136, 0.65)";
-
-        ctx.fillText(character, x, y);
-
-        if (y > matrixHeight && Math.random() > 0.975) {
-            drops[i] = 0;
+        if (y > window.innerHeight && Math.random() > 0.975) {
+            matrixDrops[i] = 0;
         }
 
-        drops[i] += 0.45;
+        matrixDrops[i] += Math.random() > 0.94 ? 1.8 : 0.8;
     }
 }
 
 resizeMatrix();
 window.addEventListener("resize", resizeMatrix);
-setInterval(drawMatrix, 45);
-
-/* LANGUAGE SWITCH */
+window.setInterval(drawMatrix, 42);
 
 const languageSwitch = document.getElementById("languageSwitch");
 const languageLabel = document.getElementById("languageLabel");
+let currentLanguage = localStorage.getItem("cyberPathLanguage") || "en";
 
 function setLanguage(language) {
-    const isArabic = language === "ar";
-
+    currentLanguage = language;
     document.documentElement.lang = language;
-    document.documentElement.dir = isArabic ? "rtl" : "ltr";
-    document.body.dir = isArabic ? "rtl" : "ltr";
+    document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+    document.body.dir = language === "ar" ? "rtl" : "ltr";
+    languageLabel.textContent = language === "en" ? "AR" : "EN";
 
-    document.querySelectorAll("[data-en][data-ar]").forEach(element => {
-        element.textContent = element.dataset[language];
+    document.querySelectorAll("[data-en][data-ar]").forEach((element) => {
+        const value = element.dataset[language];
+        if (value !== undefined) {
+            element.innerHTML = value;
+        }
     });
 
-    languageLabel.textContent = isArabic ? "EN" : "AR";
-
-    document.title = isArabic
-        ? "HACK PATH | أكاديمية التكنولوجيا"
-        : "HACK PATH | Digital Academy";
-
-    localStorage.setItem("hackPathLanguage", language);
+    localStorage.setItem("cyberPathLanguage", language);
 }
 
-const savedLanguage = localStorage.getItem("hackPathLanguage") || "en";
-setLanguage(savedLanguage);
-
 languageSwitch.addEventListener("click", () => {
-    const currentLanguage = document.documentElement.lang;
     setLanguage(currentLanguage === "en" ? "ar" : "en");
 });
 
-/* MOBILE NAVIGATION */
+setLanguage(currentLanguage);
 
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
 
 menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("open");
+    const isOpen = navLinks.classList.toggle("open");
+    menuToggle.classList.toggle("active", isOpen);
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
 });
 
-document.querySelectorAll(".nav-link").forEach(link => {
+document.querySelectorAll(".nav-link").forEach((link) => {
     link.addEventListener("click", () => {
         navLinks.classList.remove("open");
+        menuToggle.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
     });
 });
-
-/* ACTIVE NAVIGATION */
 
 const sections = document.querySelectorAll("main section[id]");
 const navigationLinks = document.querySelectorAll(".nav-link");
 
-window.addEventListener("scroll", () => {
-    let currentSection = "home";
+function updateActiveNavigation() {
+    let activeSection = "home";
 
-    sections.forEach(section => {
-        if (window.scrollY >= section.offsetTop - 140) {
-            currentSection = section.id;
+    sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 150;
+        if (window.scrollY >= sectionTop) {
+            activeSection = section.id;
         }
     });
 
-    navigationLinks.forEach(link => {
-        link.classList.toggle(
-            "active",
-            link.getAttribute("href") === `#${currentSection}`
-        );
+    navigationLinks.forEach((link) => {
+        link.classList.toggle("active", link.getAttribute("href") === `#${activeSection}`);
     });
-});
+}
 
-/* INFORMATION MODAL */
+window.addEventListener("scroll", updateActiveNavigation, { passive: true });
+updateActiveNavigation();
 
 const modal = document.getElementById("infoModal");
 const modalClose = document.getElementById("modalClose");
 const modalOk = document.getElementById("modalOk");
+const modalIcon = document.getElementById("modalIcon");
+const modalLabel = document.getElementById("modalLabel");
+const modalTitle = document.getElementById("modalTitle");
+const modalDescription = document.getElementById("modalDescription");
+const modalDetails = document.getElementById("modalDetails");
 
-function openModal() {
+const courseInformation = {
+    basics: {
+        icon: "⌘",
+        label: {
+            en: "FREE COURSE / COURSE_001",
+            ar: "كورس مجاني / COURSE_001"
+        },
+        title: {
+            en: "Basics of Cyber Security",
+            ar: "أساسيات الأمن السيبراني"
+        },
+        description: {
+            en: "A beginner-friendly introduction to the core concepts you need before moving deeper into cybersecurity.",
+            ar: "مقدمة مناسبة للمبتدئين عن المفاهيم الأساسية اللي هتحتاجها قبل ما تتعمق في مجال الأمن السيبراني."
+        },
+        modules: [
+            ["Networking Basics", "أساسيات الشبكات"],
+            ["Linux", "لينكس"],
+            ["Cryptography", "التشفير"],
+            ["Web Basics", "أساسيات الويب"]
+        ],
+        free: true
+    },
+    "web-pentest": {
+        icon: "⌬",
+        label: {
+            en: "PAID COURSE / COURSE_002",
+            ar: "كورس مدفوع / COURSE_002"
+        },
+        title: {
+            en: "Web Application Penetration Testing",
+            ar: "اختبار اختراق تطبيقات الويب"
+        },
+        description: {
+            en: "A focused learning path about assessing web application security and understanding common vulnerabilities. Enrollment and payment are arranged through platform support.",
+            ar: "مسار تعليمي متخصص في تقييم أمان تطبيقات الويب وفهم الثغرات الشائعة. الاشتراك والدفع بيتم الاتفاق عليهم من خلال دعم المنصة."
+        },
+        modules: [
+            ["Web Application Security", "أمن تطبيقات الويب"],
+            ["Testing Methodology", "منهجية الاختبار"],
+            ["Vulnerability Analysis", "تحليل الثغرات"]
+        ],
+        free: false
+    }
+};
+
+function openCourseModal(courseKey) {
+    const course = courseInformation[courseKey];
+    if (!course) return;
+
+    modalIcon.textContent = course.icon;
+    modalLabel.textContent = course.label[currentLanguage];
+    modalTitle.textContent = course.title[currentLanguage];
+    modalDescription.textContent = course.description[currentLanguage];
+
+    modalDetails.innerHTML = course.modules.map((module, index) => {
+        const title = module[currentLanguage];
+        return `<div class="modal-module"><span>${String(index + 1).padStart(2, "0")}</span><strong>${title}</strong></div>`;
+    }).join("");
+
+    modalOk.querySelector("span").textContent = currentLanguage === "en" ? "GOT IT" : "تمام";
     modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+    modalClose.focus();
 }
 
 function closeModal() {
     modal.classList.remove("show");
+    document.body.style.overflow = "";
 }
 
-document.getElementById("loginButton").addEventListener("click", event => {
-    event.preventDefault();
-    openModal();
+document.querySelectorAll(".course-action").forEach((button) => {
+    button.addEventListener("click", () => openCourseModal(button.dataset.course));
 });
 
-document.getElementById("contactButton").addEventListener("click", event => {
-    event.preventDefault();
-    openModal();
-});
-
-document.querySelectorAll(".course-link").forEach(link => {
-    link.addEventListener("click", event => {
-        event.preventDefault();
-        openModal();
-    });
+document.getElementById("loginButton").addEventListener("click", () => {
+    modalIcon.textContent = "↗";
+    modalLabel.textContent = currentLanguage === "en" ? "STUDENT AREA" : "منطقة الطلاب";
+    modalTitle.textContent = currentLanguage === "en" ? "Student Portal" : "بوابة الطلاب";
+    modalDescription.textContent = currentLanguage === "en"
+        ? "Student registration, login, course access, and the learning dashboard will be available here."
+        : "تسجيل الطلاب وتسجيل الدخول والوصول للكورسات ولوحة التعلم هتكون متاحة هنا.";
+    modalDetails.innerHTML = "";
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+    modalClose.focus();
 });
 
 modalClose.addEventListener("click", closeModal);
 modalOk.addEventListener("click", closeModal);
 
-modal.addEventListener("click", event => {
-    if (event.target === modal) {
-        closeModal();
-    }
+modal.addEventListener("click", (event) => {
+    if (event.target === modal) closeModal();
 });
 
-document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-        closeModal();
-    }
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeModal();
 });
 
-/* SECRET EASTER EGGS */
-
-const easterEggStyle = document.createElement("style");
-
-easterEggStyle.textContent = `
+const eggStyle = document.createElement("style");
+eggStyle.textContent = `
     .egg-overlay {
         position: fixed;
         inset: 0;
         z-index: 999999;
-        pointer-events: none;
         overflow: hidden;
-        isolation: isolate;
+        pointer-events: none;
+        background: rgba(0, 5, 2, 0.94);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-
-    .egg-rain-item {
+    .egg-rain {
         position: absolute;
-        top: -100px;
-        font-size: 30px;
-        animation: eggRainFall linear forwards;
-        will-change: transform;
+        top: -12vh;
+        color: #39ff88;
+        font-family: monospace;
+        font-weight: 900;
+        text-shadow: 0 0 12px #39ff88;
+        animation: egg-fall linear forwards;
+        white-space: nowrap;
     }
-
-    .egg-duck {
-        filter: grayscale(1) brightness(0);
-    }
-
-    @keyframes eggRainFall {
-        from {
-            transform: translateY(-100px) rotate(0deg);
-        }
-        to {
-            transform: translateY(115vh) rotate(360deg);
-        }
-    }
-
     .egg-giant {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        font-size: clamp(110px, 22vw, 230px);
-        transform: translate(-50%, -160vh) scale(0.5);
-        animation: eggGiantDrop 1.3s cubic-bezier(.2,.8,.2,1) forwards;
-        will-change: transform;
+        position: relative;
+        z-index: 2;
+        font-size: clamp(110px, 25vw, 260px);
+        opacity: 0;
+        transform: translateY(-120vh) scale(.45);
+        filter: drop-shadow(0 0 35px rgba(57,255,136,.7));
+        animation: egg-drop 1s cubic-bezier(.18,.8,.2,1) forwards;
     }
-
-    @keyframes eggGiantDrop {
-        0% {
-            transform: translate(-50%, -160vh) scale(0.5) rotate(-25deg);
-        }
-        75% {
-            transform: translate(-50%, -43%) scale(1.12) rotate(8deg);
-        }
-        88% {
-            transform: translate(-50%, -52%) scale(.95) rotate(-5deg);
-        }
-        100% {
-            transform: translate(-50%, -50%) scale(1) rotate(0);
-        }
+    .egg-giant.duck {
+        filter: grayscale(1) brightness(0) drop-shadow(0 0 28px rgba(57,255,136,.65));
     }
-
-    .egg-burst {
-        animation: eggBurst .35s ease-out forwards;
-    }
-
-    @keyframes eggBurst {
-        to {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(2.8) rotate(25deg);
-        }
-    }
-
     .egg-particle {
         position: absolute;
-        left: 50%;
-        top: 50%;
-        font-size: clamp(25px, 5vw, 55px);
-        animation: eggParticleFly 1.15s cubic-bezier(.15,.7,.3,1) forwards;
-        will-change: transform, opacity;
+        z-index: 3;
+        font-size: 25px;
+        animation: egg-burst 1.25s ease-out forwards;
     }
-
-    @keyframes eggParticleFly {
-        0% {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(.3) rotate(0);
-        }
-        100% {
-            opacity: 0;
-            transform:
-                translate(
-                    calc(-50% + var(--move-x)),
-                    calc(-50% + var(--move-y))
-                )
-                scale(1.3)
-                rotate(var(--rotation));
-        }
+    @keyframes egg-fall {
+        to { transform: translateY(125vh); }
     }
-
+    @keyframes egg-drop {
+        0% { opacity: 0; transform: translateY(-120vh) scale(.45) rotate(-20deg); }
+        75% { opacity: 1; transform: translateY(3vh) scale(1.08) rotate(5deg); }
+        100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+    }
+    @keyframes egg-burst {
+        0% { opacity: 1; transform: translate(0,0) scale(1.2) rotate(0); }
+        100% { opacity: 0; transform: translate(var(--dx),var(--dy)) scale(.15) rotate(360deg); }
+    }
     @media (prefers-reduced-motion: reduce) {
-        .egg-rain-item,
-        .egg-giant,
-        .egg-particle {
-            animation-duration: .01ms !important;
-        }
+        .egg-rain, .egg-giant, .egg-particle { animation-duration: .01ms !important; }
     }
 `;
+document.head.appendChild(eggStyle);
 
-document.head.appendChild(easterEggStyle);
-
-let eggRunning = false;
 let typingBuffer = "";
-let typingTimer = null;
+let eggRunning = false;
 
-function createEasterEgg(type) {
+function launchEasterEgg(type) {
     if (eggRunning) return;
-
     eggRunning = true;
-    typingBuffer = "";
 
     const isDuck = type === "blackduck";
-    const mainEmoji = isDuck ? "🦆" : "🕷️";
-    const particleEmoji = isDuck ? "🦆" : "🕷️";
-
     const overlay = document.createElement("div");
     overlay.className = "egg-overlay";
-
     document.body.appendChild(overlay);
 
-    const rainItems = [];
+    const symbols = isDuck ? ["🦆", "◆", "▪"] : ["🕷️", "⌘", "⌬"];
+    const rainInterval = window.setInterval(() => {
+        for (let i = 0; i < 5; i++) {
+            const drop = document.createElement("span");
+            drop.className = "egg-rain";
+            drop.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            drop.style.left = `${Math.random() * 100}%`;
+            drop.style.fontSize = `${18 + Math.random() * 24}px`;
+            drop.style.animationDuration = `${1.2 + Math.random() * 2.2}s`;
+            overlay.appendChild(drop);
+            window.setTimeout(() => drop.remove(), 3600);
+        }
+    }, 75);
 
-    for (let i = 0; i < 65; i++) {
-        const item = document.createElement("span");
+    window.setTimeout(() => {
+        window.clearInterval(rainInterval);
+        overlay.querySelectorAll(".egg-rain").forEach((item) => item.remove());
 
-        item.className = "egg-rain-item" + (isDuck ? " egg-duck" : "");
-        item.textContent = mainEmoji;
-        item.style.left = `${Math.random() * 100}%`;
-        item.style.animationDuration = `${1.8 + Math.random() * 2.8}s`;
-        item.style.animationDelay = `${Math.random() * 2}s`;
-        item.style.fontSize = `${20 + Math.random() * 25}px`;
-
-        overlay.appendChild(item);
-        rainItems.push(item);
-    }
-
-    const rainTimeout = setTimeout(() => {
-        rainItems.forEach(item => item.remove());
-
-        const giant = document.createElement("span");
-
-        giant.className = "egg-giant" + (isDuck ? " egg-duck" : "");
-        giant.textContent = mainEmoji;
-
+        const giant = document.createElement("div");
+        giant.className = `egg-giant${isDuck ? " duck" : ""}`;
+        giant.textContent = isDuck ? "🦆" : "🕷️";
         overlay.appendChild(giant);
 
-        setTimeout(() => {
-            giant.classList.add("egg-burst");
+        window.setTimeout(() => {
+            const bounds = giant.getBoundingClientRect();
+            const centerX = bounds.left + bounds.width / 2;
+            const centerY = bounds.top + bounds.height / 2;
+            giant.remove();
 
-            for (let i = 0; i < 32; i++) {
+            for (let i = 0; i < 34; i++) {
                 const particle = document.createElement("span");
-
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 160 + Math.random() * 360;
-
-                particle.className = "egg-particle" + (isDuck ? " egg-duck" : "");
-                particle.textContent = particleEmoji;
-
-                particle.style.setProperty(
-                    "--move-x",
-                    `${Math.cos(angle) * distance}px`
-                );
-
-                particle.style.setProperty(
-                    "--move-y",
-                    `${Math.sin(angle) * distance}px`
-                );
-
-                particle.style.setProperty(
-                    "--rotation",
-                    `${Math.random() * 720 - 360}deg`
-                );
-
+                particle.className = "egg-particle";
+                particle.textContent = isDuck ? "🦆" : "🕷️";
+                particle.style.left = `${centerX}px`;
+                particle.style.top = `${centerY}px`;
+                particle.style.setProperty("--dx", `${(Math.random() - 0.5) * window.innerWidth * 1.2}px`);
+                particle.style.setProperty("--dy", `${(Math.random() - 0.5) * window.innerHeight * 1.2}px`);
                 overlay.appendChild(particle);
             }
 
-            setTimeout(() => {
+            window.setTimeout(() => {
                 overlay.remove();
                 eggRunning = false;
-            }, 1400);
-
+            }, 1450);
         }, 1450);
-
     }, 5000);
-
-    overlay.dataset.timeout = rainTimeout;
 }
 
-document.addEventListener("keydown", event => {
+document.addEventListener("keydown", (event) => {
     if (event.ctrlKey || event.altKey || event.metaKey) return;
 
-    if (eggRunning) return;
-
     const target = event.target;
-
-    if (
-        target.isContentEditable ||
-        ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)
-    ) {
-        return;
-    }
-
-    if (event.key === "Backspace") {
-        typingBuffer = typingBuffer.slice(0, -1);
+    if (target && (
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.tagName === "SELECT" ||
+        target.isContentEditable
+    )) {
         return;
     }
 
     if (event.key.length !== 1) return;
 
-    typingBuffer += event.key.toLowerCase();
-    typingBuffer = typingBuffer.slice(-11);
+    typingBuffer = (typingBuffer + event.key.toLowerCase()).slice(-11);
 
     if (typingBuffer.endsWith("blackduck")) {
-        createEasterEgg("blackduck");
-    } else if (typingBuffer.endsWith("peterparker")) {
-        createEasterEgg("peterparker");
-    }
-
-    clearTimeout(typingTimer);
-
-    typingTimer = setTimeout(() => {
         typingBuffer = "";
-    }, 2500);
+        launchEasterEgg("blackduck");
+    } else if (typingBuffer.endsWith("peterparker")) {
+        typingBuffer = "";
+        launchEasterEgg("peterparker");
+    }
 });
