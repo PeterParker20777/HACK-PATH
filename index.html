@@ -1,46 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#050807">
-    <meta name="description" content="CYBER PATH — Explore cybersecurity fundamentals and web application penetration testing.">
     <title>CYBER PATH | Learn. Explore. Secure.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/extras.css">
 </head>
 <body>
-    <canvas id="matrix" aria-hidden="true"></canvas>
-    <div class="background-overlay" aria-hidden="true"></div>
-    <div class="scanlines" aria-hidden="true"></div>
+
+    <canvas id="matrix"></canvas>
+    <div class="background-overlay"></div>
+    <div class="scanlines"></div>
 
     <header class="navbar">
-        <a class="logo" href="#home" aria-label="CYBER PATH home">
-            <span class="logo-bracket">[</span> CYBER PATH <span class="logo-bracket">]</span>
+        <button class="language-switch" id="languageSwitch" aria-label="Change language">
+            <span class="planet-icon">◎</span>
+            <span id="languageLabel">AR</span>
+        </button>
+
+        <a href="#home" class="logo">
+            <span class="logo-bracket">[</span>CYBER<span class="green">PATH</span><span class="logo-bracket">]</span>
         </a>
 
-        <nav class="nav-links" id="navLinks">
-            <a class="nav-link active" href="#home"><span data-en="HOME" data-ar="الرئيسية">HOME</span></a>
-            <a class="nav-link" href="#courses"><span data-en="COURSES" data-ar="الكورسات">COURSES</span></a>
-            <a class="nav-link" href="#about"><span data-en="ABOUT" data-ar="عن المنصة">ABOUT</span></a>
-            <a class="nav-link" href="#contact"><span data-en="CONTACT" data-ar="تواصل معنا">CONTACT</span></a>
-        </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+        </button>
 
-        <div class="nav-actions">
-            <button class="language-switch" id="languageSwitch" type="button" aria-label="Switch language">
-                <span class="planet-icon" aria-hidden="true">◎</span>
-                <span id="languageLabel">AR</span>
-            </button>
-            <button class="nav-login" id="loginButton" type="button">
-                <span data-en="STUDENT LOGIN" data-ar="دخول الطلاب">STUDENT LOGIN</span>
-                <span aria-hidden="true">↗</span>
-            </button>
-            <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
+        <nav class="nav-links" id="navLinks">
+            <a href="#home" class="nav-link active" data-en="Home" data-ar="الرئيسية">Home</a>
+            <a href="#courses" class="nav-link" data-en="Courses" data-ar="الكورسات">Courses</a>
+            <a href="#about" class="nav-link" data-en="About" data-ar="عن المنصة">About</a>
+            <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+            <a href="#" class="nav-login" id="loginButton"><span data-en="LOGIN" data-ar="تسجيل الدخول">LOGIN</span> <span>↗</span></a>
+        </nav>
     </header>
 
     <main>
@@ -50,61 +48,66 @@
                     <span class="status-dot"></span>
                     <span data-en="SYSTEM ONLINE" data-ar="النظام يعمل">SYSTEM ONLINE</span>
                     <span class="status-line"></span>
-                    <span class="status-version">CYBER PATH / 1.0</span>
+                    <span class="status-version">V 1.0.0</span>
                 </div>
 
-                <p class="hero-overline" data-en="YOUR JOURNEY INTO CYBERSECURITY STARTS HERE" data-ar="رحلتك في عالم الأمن السيبراني تبدأ من هنا">YOUR JOURNEY INTO CYBERSECURITY STARTS HERE</p>
+                <p class="hero-overline" data-en="WELCOME TO THE NEXT LEVEL" data-ar="أهلاً بك في المستوى التالي">WELCOME TO THE NEXT LEVEL</p>
 
                 <h1>
-                    <span data-en="THINK LIKE A" data-ar="فكّر بعقلية">THINK LIKE A</span><br>
-                    <span class="hero-outline" data-en="HACKER." data-ar="الهاكر.">HACKER.</span><br>
-                    <span class="hero-green" data-en="BUILD LIKE A PRO." data-ar="وابنِ مهارات المحترفين.">BUILD LIKE A PRO.</span>
+                    <span data-en="LEARN." data-ar="تعلّم.">LEARN.</span><br>
+                    <span class="hero-outline" data-en="EXPLORE." data-ar="اكتشف.">EXPLORE.</span><br>
+                    <span class="hero-green" data-en="SECURE." data-ar="أمّن.">SECURE.</span><span class="green">_</span>
                 </h1>
 
-                <p class="hero-description" data-en="Learn the foundations of cybersecurity, understand how systems work, and build the skills to protect the digital world." data-ar="اتعلم أساسيات الأمن السيبراني، وافهم الأنظمة بتشتغل إزاي، وابني مهاراتك علشان تساهم في حماية العالم الرقمي.">
-                    Learn the foundations of cybersecurity, understand how systems work, and build the skills to protect the digital world.
+                <p class="hero-description"
+                   data-en="Your journey into technology starts here. Explore programming, cybersecurity, and the skills that shape the digital future."
+                   data-ar="رحلتك في عالم التكنولوجيا بتبدأ من هنا. اتعلم البرمجة والأمن السيبراني واكتسب المهارات اللي هتفتحلك أبواب المستقبل.">
+                    Your journey into technology starts here. Explore programming, cybersecurity, and the skills that shape the digital future.
                 </p>
 
                 <div class="hero-actions">
                     <a href="#courses" class="primary-button">
-                        <span data-en="EXPLORE COURSES" data-ar="استكشف الكورسات">EXPLORE COURSES</span>
-                        <span aria-hidden="true">↘</span>
+                        <span data-en="EXPLORE COURSES" data-ar="اكتشف الكورسات">EXPLORE COURSES</span>
+                        <span>↗</span>
                     </a>
-                    <a href="#about" class="secondary-button">
-                        <span data-en="DISCOVER CYBER PATH" data-ar="اكتشف CYBER PATH">DISCOVER CYBER PATH</span>
+                    <a href="#about" class="secondary-button"
+                       data-en="DISCOVER CYBER PATH" data-ar="اكتشف CYBER PATH">
+                        DISCOVER CYBER PATH
                     </a>
                 </div>
 
                 <div class="hero-bottom-info">
-                    <span>01 / LEARN</span>
-                    <span>02 / PRACTICE</span>
-                    <span>03 / SECURE</span>
+                    <span><span class="green">01</span> <span data-en="LEARN" data-ar="تعلّم">LEARN</span></span>
+                    <span><span class="green">02</span> <span data-en="PRACTICE" data-ar="طبّق">PRACTICE</span></span>
+                    <span><span class="green">03</span> <span data-en="EVOLVE" data-ar="اتطور">EVOLVE</span></span>
                 </div>
             </div>
 
             <div class="hero-visual">
                 <div class="visual-top">
-                    <span>CYBER_PATH.exe</span>
+                    <span>TERMINAL_01</span>
                     <span class="terminal-dots">● ● ●</span>
                 </div>
+
                 <div class="terminal-content">
-                    <div><span class="terminal-green">root@cyberpath</span><span class="terminal-muted">:~$</span> whoami</div>
-                    <div class="typing-text" data-en="Future Cybersecurity Specialist" data-ar="متخصص أمن سيبراني في المستقبل">Future Cybersecurity Specialist</div>
+                    <p><span class="terminal-green">root@cyberpath</span>:~$ initialize_learning</p>
+                    <p class="terminal-muted">Initializing environment...</p>
+                    <p class="terminal-green">[ OK ] System ready</p>
+                    <p class="terminal-muted">Loading knowledge modules...</p>
+                    <p class="terminal-green">[ OK ] Modules loaded</p>
                     <br>
-                    <div><span class="terminal-green">root@cyberpath</span><span class="terminal-muted">:~$</span> cat mission.txt</div>
-                    <div class="terminal-muted" data-en="Understand. Analyze. Protect." data-ar="افهم. حلّل. احمِ.">Understand. Analyze. Protect.</div>
-                    <br>
-                    <div><span class="terminal-green">root@cyberpath</span><span class="terminal-muted">:~$</span> <span class="cursor">_</span></div>
+                    <p><span class="terminal-green">root@cyberpath</span>:~$ <span class="typing-text">start_your_journey</span><span class="cursor">_</span></p>
                 </div>
+
                 <div class="terminal-footer">
-                    <span>CONNECTION: ENCRYPTED</span>
-                    <span class="terminal-green">● ACTIVE</span>
+                    <span>CONNECTION SECURE</span>
+                    <span>ENCRYPTION: ACTIVE</span>
                 </div>
-                <span class="hero-side-label">ACCESS THE KNOWLEDGE</span>
             </div>
 
+            <div class="hero-side-label">CYBER PATH — LEARN. EXPLORE. SECURE.</div>
             <div class="hero-scroll">
-                <span data-en="SCROLL TO EXPLORE" data-ar="انزل لاكتشاف المزيد">SCROLL TO EXPLORE</span>
+                <span data-en="SCROLL TO EXPLORE" data-ar="انزل واكتشف">SCROLL TO EXPLORE</span>
                 <span>↓</span>
             </div>
         </section>
@@ -112,109 +115,91 @@
         <section class="courses section" id="courses">
             <div class="section-heading">
                 <div>
-                    <p class="section-label" data-en="LEARNING PATHS / 001" data-ar="مسارات التعلم / 001">LEARNING PATHS / 001</p>
-                    <h2 data-en="Choose Your <span class='green'>Path.</span>" data-ar="اختار <span class='green'>مسارك.</span>">Choose Your <span class="green">Path.</span></h2>
+                    <p class="section-label" data-en="// KNOWLEDGE DATABASE" data-ar="// مكتبة المعرفة">// KNOWLEDGE DATABASE</p>
+                    <h2>
+                        <span data-en="CHOOSE YOUR" data-ar="اختار">CHOOSE YOUR</span>
+                        <span class="green" data-en="PATH." data-ar="طريقك.">PATH.</span>
+                    </h2>
                 </div>
-                <p class="section-description" data-en="Start with the fundamentals or take your skills further with practical web security learning." data-ar="ابدأ بالأساسيات أو طوّر مهاراتك في مجال أمن تطبيقات الويب.">Start with the fundamentals or take your skills further with practical web security learning.</p>
+
+                <p class="section-description"
+                   data-en="Start with the fundamentals. Build your skills. Discover what you can create."
+                   data-ar="ابدأ من الأساسيات، طوّر مهاراتك، واكتشف بنفسك إيه اللي تقدر تحققه.">
+                    Start with the fundamentals. Build your skills. Discover what you can create.
+                </p>
             </div>
 
-            <div class="courses-grid">
-                <article class="course-card featured-card">
-                    <div class="course-top">
-                        <span class="course-number">COURSE_001</span>
-                        <span class="course-icon">⌘</span>
-                    </div>
-                    <div class="course-art">
-                        <span class="art-symbol">01</span>
-                        <span class="art-code">FOUNDATION // CYBER SECURITY</span>
-                    </div>
-                    <div class="course-info">
-                        <span class="course-category" data-en="BEGINNER • 4 MODULES" data-ar="مبتدئ • 4 أجزاء">BEGINNER • 4 MODULES</span>
-                        <h3 data-en="Basics of Cyber Security" data-ar="أساسيات الأمن السيبراني">Basics of Cyber Security</h3>
-                        <p data-en="Build a strong foundation through networking basics, Linux, cryptography, and web basics." data-ar="ابني أساس قوي من خلال أساسيات الشبكات، ولينكس، والتشفير، وأساسيات الويب.">Build a strong foundation through networking basics, Linux, cryptography, and web basics.</p>
-                        <div class="course-modules">
-                            <span>01 / Networking Basics</span>
-                            <span>02 / Linux</span>
-                            <span>03 / Cryptography</span>
-                            <span>04 / Web Basics</span>
-                        </div>
-                        <div class="course-meta">
-                            <span class="course-price free-price" data-en="FREE" data-ar="مجاني">FREE</span>
-                            <span class="course-access" data-en="OPEN ACCESS" data-ar="متاح للجميع">OPEN ACCESS</span>
-                        </div>
-                        <button class="course-link course-action" type="button" data-course="basics">
-                            <span data-en="EXPLORE COURSE" data-ar="استكشف الكورس">EXPLORE COURSE</span>
-                            <span>↗</span>
-                        </button>
-                    </div>
-                </article>
+            <div class="courses-grid" id="coursesGrid"></div>
 
-                <article class="course-card paid-course">
-                    <div class="course-top">
-                        <span class="course-number">COURSE_002</span>
-                        <span class="course-icon">⌬</span>
-                    </div>
-                    <div class="course-art paid-art">
-                        <span class="art-symbol">02</span>
-                        <span class="art-code">WEB // APPLICATION SECURITY</span>
-                    </div>
-                    <div class="course-info">
-                        <span class="course-category" data-en="ADVANCED TRACK" data-ar="مسار متقدم">ADVANCED TRACK</span>
-                        <h3 data-en="Web Application Penetration Testing" data-ar="اختبار اختراق تطبيقات الويب">Web Application Penetration Testing</h3>
-                        <p data-en="Explore web application security testing and learn how to identify and understand common vulnerabilities." data-ar="اتعرف على اختبار أمان تطبيقات الويب، واتعلم اكتشاف الثغرات الأمنية الشائعة وفهمها.">Explore web application security testing and learn how to identify and understand common vulnerabilities.</p>
-                        <div class="course-modules">
-                            <span data-en="PRACTICAL LEARNING" data-ar="تعلم عملي">PRACTICAL LEARNING</span>
-                            <span data-en="WEB SECURITY" data-ar="أمن تطبيقات الويب">WEB SECURITY</span>
-                            <span data-en="VULNERABILITY ANALYSIS" data-ar="تحليل الثغرات">VULNERABILITY ANALYSIS</span>
-                        </div>
-                        <div class="course-meta">
-                            <span class="course-price paid-price" data-en="PAID COURSE" data-ar="كورس مدفوع">PAID COURSE</span>
-                            <span class="course-access" data-en="CONTACT TO ENROLL" data-ar="تواصل للاشتراك">CONTACT TO ENROLL</span>
-                        </div>
-                        <button class="course-link course-action" type="button" data-course="web-pentest">
-                            <span data-en="COURSE DETAILS" data-ar="تفاصيل الكورس">COURSE DETAILS</span>
-                            <span>↗</span>
-                        </button>
-                    </div>
-                </article>
-            </div>
 
             <div class="courses-footer">
-                <div class="loading-indicator"><i></i><i></i><i></i></div>
-                <span data-en="MORE KNOWLEDGE. MORE POSSIBILITIES." data-ar="معرفة أكتر. فرص أكتر.">MORE KNOWLEDGE. MORE POSSIBILITIES.</span>
+                <span data-en="MORE KNOWLEDGE IS COMING" data-ar="المزيد من المعرفة قادم">MORE KNOWLEDGE IS COMING</span>
+                <span class="loading-indicator"><i></i><i></i><i></i></span>
             </div>
         </section>
 
         <section class="about section" id="about">
-            <div class="about-frame">
-                <span class="frame-corner top-left"></span>
-                <span class="frame-corner top-right"></span>
-                <span class="frame-corner bottom-left"></span>
-                <span class="frame-corner bottom-right"></span>
-                <div class="about-symbol">
-                    <span>CP</span>
-                    <i class="symbol-ring ring-one"></i>
-                    <i class="symbol-ring ring-two"></i>
+            <div class="about-visual">
+                <div class="about-frame">
+                    <div class="frame-corner top-left"></div>
+                    <div class="frame-corner top-right"></div>
+                    <div class="frame-corner bottom-left"></div>
+                    <div class="frame-corner bottom-right"></div>
+
+                    <div class="about-symbol">
+                        <span>C</span>
+                        <div class="symbol-ring ring-one"></div>
+                        <div class="symbol-ring ring-two"></div>
+                    </div>
+
+                    <div class="about-frame-label">CYBER PATH / EST. 2026</div>
                 </div>
-                <span class="about-frame-label">CYBER PATH / OUR VISION</span>
             </div>
+
             <div class="about-content">
-                <p class="section-label" data-en="ABOUT THE PLATFORM" data-ar="عن المنصة">ABOUT THE PLATFORM</p>
-                <h2 data-en="Knowledge is your <span class='green'>strongest defense.</span>" data-ar="المعرفة هي <span class='green'>أقوى وسيلة حماية.</span>">Knowledge is your <span class="green">strongest defense.</span></h2>
-                <p data-en="CYBER PATH is a learning platform built to make cybersecurity knowledge more accessible. Learn step by step, strengthen your technical foundation, and move forward at your own pace." data-ar="CYBER PATH منصة تعليمية هدفها تخلي تعلم الأمن السيبراني أقرب وأسهل. اتعلم خطوة بخطوة، قوّي أساسك التقني، واتقدم بالسرعة المناسبة ليك.">CYBER PATH is a learning platform built to make cybersecurity knowledge more accessible. Learn step by step, strengthen your technical foundation, and move forward at your own pace.</p>
+                <p class="section-label" data-en="// ABOUT THE PLATFORM" data-ar="// عن المنصة">// ABOUT THE PLATFORM</p>
+                <h2>
+                    <span data-en="NOT JUST" data-ar="مش مجرد">NOT JUST</span><br>
+                    <span data-en="A COURSE." data-ar="كورس.">A COURSE.</span><br>
+                    <span class="green" data-en="A NEW PATH." data-ar="دي بداية طريق.">A NEW PATH.</span>
+                </h2>
+
+                <p data-en="CYBER PATH is a learning platform built for curious minds. Whether you're taking your first steps in programming or exploring cybersecurity, we're here to help you understand technology from the ground up."
+                   data-ar="CYBER PATH منصة تعليمية لكل شخص عنده فضول يكتشف عالم التكنولوجيا. سواء دي أول خطوة ليك في البرمجة أو عايز تتعرف على الأمن السيبراني، إحنا هنا نساعدك تبني معرفتك من الصفر.">
+                    CYBER PATH is a learning platform built for curious minds. Whether you're taking your first steps in programming or exploring cybersecurity, we're here to help you understand technology from the ground up.
+                </p>
+
                 <div class="about-features">
                     <div class="feature">
-                        <span class="feature-icon">⌘</span>
+                        <span class="feature-icon">01</span>
                         <div>
-                            <h4 data-en="Structured Learning" data-ar="تعلم منظم">Structured Learning</h4>
-                            <p data-en="Clear learning paths." data-ar="مسارات تعلم واضحة.">Clear learning paths.</p>
+                            <h4 data-en="LEARN AT YOUR PACE" data-ar="اتعلم بالسرعة المناسبة ليك">LEARN AT YOUR PACE</h4>
+                            <p data-en="Access your courses whenever you need them."
+                               data-ar="ارجع لكورساتك وذاكر في أي وقت يناسبك.">
+                                Access your courses whenever you need them.
+                            </p>
                         </div>
                     </div>
+
                     <div class="feature">
-                        <span class="feature-icon">⌬</span>
+                        <span class="feature-icon">02</span>
                         <div>
-                            <h4 data-en="Learn at Your Pace" data-ar="اتعلم بطريقتك">Learn at Your Pace</h4>
-                            <p data-en="Return to your courses anytime." data-ar="ارجع لكورساتك في أي وقت.">Return to your courses anytime.</p>
+                            <h4 data-en="FOCUS ON THE BASICS" data-ar="ابدأ من الأساسيات">FOCUS ON THE BASICS</h4>
+                            <p data-en="Build solid foundations before moving forward."
+                               data-ar="كوّن أساس قوي قبل ما تنتقل للمستوى اللي بعده.">
+                                Build solid foundations before moving forward.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="feature">
+                        <span class="feature-icon">03</span>
+                        <div>
+                            <h4 data-en="GROW YOUR SKILLS" data-ar="طوّر مهاراتك">GROW YOUR SKILLS</h4>
+                            <p data-en="Turn what you learn into practical knowledge."
+                               data-ar="حوّل اللي بتتعلمه لمهارات تقدر تستخدمها.">
+                                Turn what you learn into practical knowledge.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -223,16 +208,27 @@
 
         <section class="contact section" id="contact">
             <div class="contact-box">
-                <div class="contact-decoration" aria-hidden="true">⌁</div>
-                <p class="section-label" data-en="NEED HELP?" data-ar="محتاج مساعدة؟">NEED HELP?</p>
-                <h2 data-en="Your next step starts with a <span class='green'>message.</span>" data-ar="خطوتك الجاية تبدأ <span class='green'>برسالة.</span>">Your next step starts with a <span class="green">message.</span></h2>
-                <p data-en="Have a question about a course or enrollment? Get in touch with the platform support." data-ar="عندك سؤال عن كورس أو الاشتراك؟ تواصل مع دعم المنصة.">Have a question about a course or enrollment? Get in touch with the platform support.</p>
+                <div class="contact-decoration">ACCESS_</div>
+                <p class="section-label" data-en="// YOUR NEXT MOVE" data-ar="// خطوتك الجاية">// YOUR NEXT MOVE</p>
+
+                <h2>
+                    <span data-en="READY TO" data-ar="مستعد">READY TO</span><br>
+                    <span class="green" data-en="ENTER THE PATH?" data-ar="تبدأ رحلتك؟">ENTER THE PATH?</span>
+                </h2>
+
+                <p data-en="Every expert was once a beginner. Your journey starts with one step."
+                   data-ar="كل خبير كان في يوم من الأيام مبتدئ. رحلتك ممكن تبدأ بخطوة واحدة.">
+                    Every expert was once a beginner. Your journey starts with one step.
+                </p>
+
+                <a href="#" class="primary-button" id="contactButton">
+                    <span data-en="GET STARTED" data-ar="ابدأ رحلتك">GET STARTED</span>
+                    <span>↗</span>
+                </a>
+
                 <div class="contact-bottom">
-                    <span data-en="CYBER PATH SUPPORT" data-ar="دعم CYBER PATH">CYBER PATH SUPPORT</span>
-                    <a class="primary-button" href="https://wa.me/" target="_blank" rel="noopener">
-                        <span data-en="CONTACT SUPPORT" data-ar="تواصل مع الدعم">CONTACT SUPPORT</span>
-                        <span>↗</span>
-                    </a>
+                    <span>CYBER PATH ACADEMY</span>
+                    <span data-en="YOUR FUTURE IS IN YOUR HANDS." data-ar="مستقبلك بين إيديك.">YOUR FUTURE IS IN YOUR HANDS.</span>
                 </div>
             </div>
         </section>
@@ -240,30 +236,62 @@
 
     <footer class="footer">
         <div class="footer-top">
-            <span class="footer-message" data-en="STAY CURIOUS. STAY SECURE." data-ar="خليك فضولي. خليك آمن.">STAY CURIOUS. STAY SECURE.</span>
-            <a class="back-top" href="#home" data-en="BACK TO TOP ↑" data-ar="للأعلى ↑">BACK TO TOP ↑</a>
+            <a href="#home" class="logo">
+                <span class="logo-bracket">[</span>CYBER<span class="green">PATH</span><span class="logo-bracket">]</span>
+            </a>
+            <span class="footer-message" data-en="LEARN. EXPLORE. SECURE." data-ar="تعلّم. اكتشف. أمّن.">LEARN. EXPLORE. SECURE.</span>
+            <a href="#" class="back-top" id="footerWhatsapp" target="_blank" rel="noopener">WHATSAPP ↗</a>
+            <a href="#home" class="back-top" data-en="BACK TO TOP ↑" data-ar="للأعلى ↑">BACK TO TOP ↑</a>
         </div>
+
         <div class="footer-bottom">
-            <span>© 2026 CYBER PATH</span>
-            <span class="signature">Made By PeterParker<span class="signature-anchor"><span class="spider-thread"></span><span class="spider">🕷️</span></span></span>
-            <span>LEARN / EXPLORE / SECURE</span>
+            <span data-en="© 2026 CYBER PATH. ALL RIGHTS RESERVED."
+                  data-ar="© 2026 CYBER PATH. جميع الحقوق محفوظة.">
+                © 2026 CYBER PATH. ALL RIGHTS RESERVED.
+            </span>
+
+            <div class="signature">
+                <span>Made By PeterParke<span class="signature-anchor">r<span class="spider-thread"><span class="spider">🕷️</span></span></span></span>
+            </div>
         </div>
     </footer>
 
-    <div class="modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal course-modal" id="courseModal">
         <div class="modal-box">
-            <button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button>
-            <span class="modal-icon" id="modalIcon">⌘</span>
-            <p class="section-label" id="modalLabel">COURSE INFORMATION</p>
-            <h3 id="modalTitle">Course title</h3>
-            <p id="modalDescription">Course description</p>
-            <div id="modalDetails" class="modal-details"></div>
-            <button class="primary-button modal-ok" id="modalOk" type="button">
-                <span data-en="GOT IT" data-ar="تمام">GOT IT</span>
-            </button>
+            <button class="modal-close" id="courseModalClose" aria-label="Close">&times;</button>
+            <p class="section-label" id="cmCategory"></p>
+            <h3 id="cmTitle"></h3>
+            <div class="course-meta" id="cmMeta"></div>
+            <p id="cmDesc"></p>
+            <h4 data-en="MODULES" data-ar="الموديولات">MODULES</h4>
+            <ol class="cm-list" id="cmModules"></ol>
+            <h4 data-en="WHAT YOU WILL LEARN" data-ar="هتتعلم إيه">WHAT YOU WILL LEARN</h4>
+            <ul class="cm-list" id="cmLearn"></ul>
+            <a class="primary-button" id="cmRequest" href="#" target="_blank" rel="noopener"><span data-en="REQUEST COURSE" data-ar="اطلب الكورس">REQUEST COURSE</span><span>↗</span></a>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="modal" id="infoModal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+            <span class="modal-icon">⌘</span>
+            <p class="section-label" data-en="// SYSTEM MESSAGE" data-ar="// رسالة النظام">// SYSTEM MESSAGE</p>
+            <h3><span data-en="COMING" data-ar="قريباً">COMING</span> <span class="green" data-en="SOON." data-ar="جداً.">SOON.</span></h3>
+            <p data-en="This feature is currently under development. Stay tuned."
+               data-ar="الميزة دي لسه تحت التطوير. خليك قريب!">
+                This feature is currently under development. Stay tuned.
+            </p>
+            <button class="primary-button modal-ok" id="modalOk" data-en="UNDERSTOOD" data-ar="تمام">UNDERSTOOD</button>
+        </div>
+    </div>
+
+        <script src="js/config.js"></script>
+    <script src="js/courses-data.js"></script>
+    <script src="js/matrix.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/easter-eggs.js"></script>
 </body>
 </html>
