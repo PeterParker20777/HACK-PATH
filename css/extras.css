@@ -45,3 +45,7 @@ body[dir="rtl"] .signature { align-items: flex-start; padding: 0 0 88px 28px; }
 @keyframes sigSwing { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
 @media (prefers-reduced-motion: reduce) { .sig-name, .sig-thread { animation: none; } }
 @media (max-width: 700px) { .signature { align-items: flex-start; padding: 0 0 88px; } .sig-name { font-size: 17px; } }
+
+/* Category cards (homepage): empty categories are dimmed */
+.category-card.soon { opacity: .55; cursor: default; }
+.category-card.soon:hover { transform: none; border-color: rgba(57, 255, 136, 0.13); box-shadow: none; }

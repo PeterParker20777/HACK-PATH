@@ -1,7 +1,20 @@
+/* Course categories shown on the homepage. A course joins one with: group: "<id>" */
+const CATEGORIES = [
+  { id: "pentest", icon: "⌘", symbol: "PT", code: "nmap -sV target",
+    title: { en: "PENETRATION TESTER", ar: "مختبر الاختراق" },
+    desc: { en: "Learn how attackers think and how to test systems the right way.", ar: "اتعلم إزاي المخترق بيفكر وإزاي تختبر الأنظمة بالطريقة الصحيحة." } },
+  { id: "source-review", icon: "{ }", symbol: "SR", code: "grep -rn eval src/",
+    title: { en: "SOURCE CODE REVIEW", ar: "مراجعة الكود المصدري" },
+    desc: { en: "Read code like an auditor and find security flaws before attackers do.", ar: "اقرأ الكود زي المراجع الأمني ودوّر على الثغرات قبل المهاجمين." } },
+  { id: "hacking-code", icon: "</>", symbol: "HC", code: "payload = build()",
+    title: { en: "HACKING CODE", ar: "كود الهاكينج" },
+    desc: { en: "Write your own scripts and tools to automate security tasks.", ar: "اكتب سكريبتاتك وأدواتك بنفسك عشان تأتمت مهام الأمن السيبراني." } }
+];
+
 /* Courses data: add or edit courses here (type: "free" | "paid") */
 const COURSES = [
   {
-    id: "python-basics", icon: "{ }", symbol: "Py", code: 'print("Hello World")', type: "paid",
+    id: "python-basics", group: "hacking-code", icon: "{ }", symbol: "Py", code: 'print("Hello World")', type: "paid",
     category: { en: "PROGRAMMING", ar: "برمجة" },
     level: { en: "Beginner", ar: "مبتدئ" },
     title: { en: "PYTHON BASICS", ar: "أساسيات بايثون" },
@@ -21,7 +34,7 @@ const COURSES = [
     ]
   },
   {
-    id: "cyber-basics", icon: "⌁", symbol: "⌘", code: "ACCESS_GRANTED();", type: "free", featured: true,
+    id: "cyber-basics", group: "pentest", icon: "⌁", symbol: "⌘", code: "ACCESS_GRANTED();", type: "free", featured: true,
     category: { en: "CYBERSECURITY", ar: "الأمن السيبراني" },
     level: { en: "Beginner", ar: "مبتدئ" },
     title: { en: "BASICS OF CYBER SECURITY", ar: "أساسيات الأمن السيبراني" },
@@ -39,7 +52,7 @@ const COURSES = [
     ]
   },
   {
-    id: "web-pentest", icon: "⌘", symbol: "</>", code: "GET /login HTTP/1.1", type: "paid",
+    id: "web-pentest", group: "pentest", icon: "⌘", symbol: "</>", code: "GET /login HTTP/1.1", type: "paid",
     category: { en: "CYBERSECURITY", ar: "الأمن السيبراني" },
     level: { en: "Intermediate", ar: "متوسط" },
     title: { en: "WEB APPLICATION PENETRATION TESTING", ar: "اختبار اختراق تطبيقات الويب" },

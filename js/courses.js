@@ -34,8 +34,32 @@ function badges(course) {
             <span class="badge" ${attrs(course.level)}>${course.level.en}</span>`;
 }
 
+let activeGroup = null;
+
+function categoryCards() {
+    return CATEGORIES.map((g, i) => {
+        const n = COURSES.filter(c => c.group === g.id).length;
+        const link = n ? { en: "VIEW COURSES", ar: "شوف الكورسات" } : { en: "COMING SOON", ar: "قريباً" };
+        const count = { en: `${n} COURSES`, ar: `${n} كورس` };
+        return `
+        <article class="course-card category-card${n ? "" : " soon"}"${n ? ` tabindex="0" role="button" data-group="${g.id}"` : ""}>
+            <div class="course-top"><span class="course-number">0${i + 1}</span><span class="course-icon">${g.icon}</span></div>
+            <div class="course-art"><span class="art-symbol">${g.symbol}</span><span class="art-code">${g.code}</span></div>
+            <div class="course-info">
+                <span class="course-category" ${attrs(count)}>${count.en}</span>
+                <h3 ${attrs(g.title)}>${g.title.en}</h3>
+                <p ${attrs(g.desc)}>${g.desc.en}</p>
+                <span class="course-link"><span ${attrs(link)}>${link.en}</span><span>↗</span></span>
+            </div>
+        </article>`;
+    }).join("");
+}
+
 function renderCourses(filter = "all") {
-    document.getElementById("coursesGrid").innerHTML = COURSES.filter(c => filter === "all" || c.type === filter).map((c, i) => `
+    document.getElementById("courseFilters").style.display = activeGroup ? "" : "none";
+    const grid = document.getElementById("coursesGrid");
+    if (!activeGroup) { grid.innerHTML = categoryCards(); return; }
+    grid.innerHTML = COURSES.filter(c => c.group === activeGroup && (filter === "all" || c.type === filter)).map((c, i) => `
         <article class="course-card${c.featured ? " featured-card" : ""}" tabindex="0" role="button" data-course="${c.id}">
             <div class="course-top"><span class="course-number">0${i + 1}</span><span class="course-icon">${c.icon}</span></div>
             <div class="course-art"><span class="art-symbol">${c.symbol}</span><span class="art-code">${c.code}</span></div>
@@ -47,6 +71,14 @@ function renderCourses(filter = "all") {
                 <span class="course-link"><span data-en="VIEW DETAILS" data-ar="التفاصيل">VIEW DETAILS</span><span>↗</span></span>
             </div>
         </article>`).join("");
+}
+
+function setGroup(id) {
+    activeGroup = id;
+    document.querySelectorAll("#courseFilters [data-filter]").forEach(x => x.classList.toggle("active", x.dataset.filter === "all"));
+    renderCourses("all");
+    setLanguage(currentLang());
+    document.getElementById("courses").scrollIntoView();
 }
 
 const courseModal = document.getElementById("courseModal");
@@ -78,14 +110,19 @@ function hideCourse() {
 renderCourses();
 
 const grid = document.getElementById("coursesGrid");
+const openCard = card => {
+    if (card.dataset.group) setGroup(card.dataset.group);
+    else if (card.dataset.course) showCourse(card.dataset.course);
+};
 grid.addEventListener("click", e => {
     const card = e.target.closest(".course-card");
-    if (card) showCourse(card.dataset.course);
+    if (card) openCard(card);
 });
 grid.addEventListener("keydown", e => {
     const card = e.target.closest(".course-card");
-    if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); showCourse(card.dataset.course); }
+    if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openCard(card); }
 });
+document.getElementById("catBack").addEventListener("click", () => setGroup(null));
 
 document.getElementById("courseModalClose").addEventListener("click", hideCourse);
 courseModal.addEventListener("click", e => { if (e.target === courseModal) hideCourse(); });
