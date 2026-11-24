@@ -16,9 +16,10 @@ function setLanguage(language) {
 
     languageLabel.textContent = isArabic ? "EN" : "AR";
 
+    const pageTitle = document.body.dataset;
     document.title = isArabic
-        ? "CYBER PATH | تعلّم. اكتشف. أمّن."
-        : "CYBER PATH | Learn. Explore. Secure.";
+        ? (pageTitle.titleAr || "CYBER PATH | تعلّم. اكتشف. أمّن.")
+        : (pageTitle.titleEn || "CYBER PATH | Learn. Explore. Secure.");
 
     document.dispatchEvent(new Event("languagechange"));
     localStorage.setItem("cyberPathLanguage", language);

@@ -18,7 +18,7 @@ document.querySelectorAll(".nav-link").forEach(link => {
 const sections = document.querySelectorAll("main section[id]");
 const navigationLinks = document.querySelectorAll(".nav-link");
 
-window.addEventListener("scroll", () => {
+if (sections.length) window.addEventListener("scroll", () => {
     let currentSection = "home";
 
     sections.forEach(section => {
