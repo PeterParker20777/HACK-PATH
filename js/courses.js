@@ -34,8 +34,8 @@ function badges(course) {
             <span class="badge" ${attrs(course.level)}>${course.level.en}</span>`;
 }
 
-function courseCard(c, i) {
-    return `
+function renderCourses(filter = "all") {
+    document.getElementById("coursesGrid").innerHTML = COURSES.filter(c => filter === "all" || c.type === filter).map((c, i) => `
         <article class="course-card${c.featured ? " featured-card" : ""}" tabindex="0" role="button" data-course="${c.id}">
             <div class="course-top"><span class="course-number">0${i + 1}</span><span class="course-icon">${c.icon}</span></div>
             <div class="course-art"><span class="art-symbol">${c.symbol}</span><span class="art-code">${c.code}</span></div>
@@ -46,46 +46,7 @@ function courseCard(c, i) {
                 <p ${attrs(c.desc)}>${c.desc.en}</p>
                 <span class="course-link"><span data-en="VIEW DETAILS" data-ar="التفاصيل">VIEW DETAILS</span><span>↗</span></span>
             </div>
-        </article>`;
-}
-
-let activeCat = null, activeFilter = "all";
-
-function panelHtml() {
-    const cat = CATEGORIES.find(x => x.id === activeCat);
-    if (!cat) return "";
-    const all = COURSES.filter(x => x.track === cat.id);
-    const shown = all.filter(x => activeFilter === "all" || x.type === activeFilter);
-    const empty = all.length ? { en: "NO MATCHING COURSES", ar: "لا توجد كورسات مطابقة" } : { en: "COMING SOON", ar: "قريباً" };
-    const chip = (f, o) => `<button type="button" class="filter-chip${activeFilter === f ? " active" : ""}" data-filter="${f}" ${attrs(o)}>${o.en}</button>`;
-    return `<div class="category-panel" id="categoryPanel">
-        <div class="panel-head">
-            <h3 class="panel-title" ${attrs(cat.title)}>${cat.title.en}</h3>
-            <div class="course-filters">${chip("all", { en: "ALL", ar: "الكل" })}${chip("free", TYPE.free)}${chip("paid", TYPE.paid)}</div>
-            <button type="button" class="panel-close" data-close="1" aria-label="Close">&times;</button>
-        </div>
-        ${shown.length ? `<div class="courses-grid">${shown.map(courseCard).join("")}</div>` : `<div class="category-empty" ${attrs(empty)}>${empty.en}</div>`}
-    </div>`;
-}
-
-function renderCourses() {
-    const cards = CATEGORIES.map((cat, n) => {
-        const total = COURSES.filter(x => x.track === cat.id).length;
-        const count = { en: `${total} COURSE${total === 1 ? "" : "S"}`, ar: `${total} كورس` };
-        return `<article class="category-card${cat.id === activeCat ? " active" : ""}" tabindex="0" role="button" data-cat="${cat.id}">
-            <span class="category-number">0${n + 1}</span>
-            <h3 class="category-title" ${attrs(cat.title)}>${cat.title.en}</h3>
-            <p class="category-desc" ${attrs(cat.desc)}>${cat.desc.en}</p>
-            <div class="category-foot"><span class="category-count" ${attrs(count)}>${count.en}</span><span class="category-open"><span data-en="VIEW COURSES" data-ar="شوف الكورسات">VIEW COURSES</span><span>↗</span></span></div>
-        </article>`;
-    }).join("");
-    document.getElementById("coursesGrid").innerHTML = `<div class="category-cards">${cards}</div>${panelHtml()}`;
-}
-
-function refreshCourses(scroll) {
-    renderCourses();
-    setLanguage(currentLang());
-    if (scroll) document.getElementById("categoryPanel")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        </article>`).join("");
 }
 
 const courseModal = document.getElementById("courseModal");
@@ -118,22 +79,12 @@ renderCourses();
 
 const grid = document.getElementById("coursesGrid");
 grid.addEventListener("click", e => {
-    const chip = e.target.closest("[data-filter]");
-    if (chip) { activeFilter = chip.dataset.filter; return refreshCourses(false); }
-    if (e.target.closest("[data-close]")) { activeCat = null; return refreshCourses(false); }
     const card = e.target.closest(".course-card");
-    if (card) return showCourse(card.dataset.course);
-    const cat = e.target.closest(".category-card");
-    if (cat) {
-        activeCat = activeCat === cat.dataset.cat ? null : cat.dataset.cat;
-        activeFilter = "all";
-        refreshCourses(Boolean(activeCat));
-    }
+    if (card) showCourse(card.dataset.course);
 });
 grid.addEventListener("keydown", e => {
-    if (e.key !== "Enter" && e.key !== " ") return;
-    const target = e.target.closest(".course-card, .category-card");
-    if (target) { e.preventDefault(); target.click(); }
+    const card = e.target.closest(".course-card");
+    if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); showCourse(card.dataset.course); }
 });
 
 document.getElementById("courseModalClose").addEventListener("click", hideCourse);
@@ -149,4 +100,12 @@ document.addEventListener("languagechange", () => {
 document.getElementById("contactButton").addEventListener("click", e => {
     e.preventDefault();
     window.open(whatsappUrl(generalMessage()), "_blank", "noopener");
+});
+
+document.getElementById("courseFilters").addEventListener("click", e => {
+    const chip = e.target.closest("[data-filter]");
+    if (!chip) return;
+    document.querySelectorAll("#courseFilters [data-filter]").forEach(x => x.classList.toggle("active", x === chip));
+    renderCourses(chip.dataset.filter);
+    setLanguage(currentLang());
 });

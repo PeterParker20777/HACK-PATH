@@ -1,17 +1,7 @@
 /* Courses data: add or edit courses here (type: "free" | "paid") */
-/* Categories: each course points to one of them with track */
-const CATEGORIES = [
-  { id: "pentester", title: { en: "PENETRATION TESTER", ar: "مختبر اختراق" },
-    desc: { en: "Test systems and web applications the way professionals do, in legal labs only.", ar: "اتعلم تفحص الأنظمة وتطبيقات الويب بطريقة المحترفين، في معامل قانونية فقط." } },
-  { id: "code-review", title: { en: "SOURCE CODE REVIEW", ar: "مراجعة الكود المصدري" },
-    desc: { en: "Read source code and find security flaws before attackers do.", ar: "اقرأ الكود المصدري واكتشف الثغرات الأمنية قبل المهاجمين." } },
-  { id: "hacking-code", title: { en: "HACKING CODE", ar: "أكواد الهاكينج" },
-    desc: { en: "Write the code behind security tools: programming and scripting for security work.", ar: "اكتب الكود اللي بتتبني عليه أدوات الأمن: برمجة وسكريبتات للعمل الأمني." } }
-];
-
 const COURSES = [
   {
-    id: "python-basics", track: "hacking-code", icon: "{ }", symbol: "Py", code: 'print("Hello World")', type: "paid",
+    id: "python-basics", icon: "{ }", symbol: "Py", code: 'print("Hello World")', type: "paid",
     category: { en: "PROGRAMMING", ar: "برمجة" },
     level: { en: "Beginner", ar: "مبتدئ" },
     title: { en: "PYTHON BASICS", ar: "أساسيات بايثون" },
@@ -31,7 +21,7 @@ const COURSES = [
     ]
   },
   {
-    id: "cyber-basics", track: "pentester", icon: "⌁", symbol: "⌘", code: "ACCESS_GRANTED();", type: "free", featured: true,
+    id: "cyber-basics", icon: "⌁", symbol: "⌘", code: "ACCESS_GRANTED();", type: "free", featured: true,
     category: { en: "CYBERSECURITY", ar: "الأمن السيبراني" },
     level: { en: "Beginner", ar: "مبتدئ" },
     title: { en: "BASICS OF CYBER SECURITY", ar: "أساسيات الأمن السيبراني" },
@@ -49,7 +39,7 @@ const COURSES = [
     ]
   },
   {
-    id: "web-pentest", track: "pentester", icon: "⌘", symbol: "</>", code: "GET /login HTTP/1.1", type: "paid",
+    id: "web-pentest", icon: "⌘", symbol: "</>", code: "GET /login HTTP/1.1", type: "paid",
     category: { en: "CYBERSECURITY", ar: "الأمن السيبراني" },
     level: { en: "Intermediate", ar: "متوسط" },
     title: { en: "WEB APPLICATION PENETRATION TESTING", ar: "اختبار اختراق تطبيقات الويب" },
