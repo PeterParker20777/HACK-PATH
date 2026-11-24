@@ -35,19 +35,27 @@ function badges(course) {
 }
 
 let activeGroup = null;
+let activeFilter = "all";
+const matches = c => activeFilter === "all" || c.type === activeFilter;
 
 function categoryCards() {
     return CATEGORIES.map((g, i) => {
-        const n = COURSES.filter(c => c.group === g.id).length;
-        const link = n ? { en: "VIEW COURSES", ar: "شوف الكورسات" } : { en: "COMING SOON", ar: "قريباً" };
-        const count = { en: `${n} COURSES`, ar: `${n} كورس` };
+        const all = COURSES.filter(c => c.group === g.id);
+        const free = all.filter(c => c.type === "free").length, paid = all.length - free;
+        const shown = all.filter(matches).length;
+        const link = !all.length ? { en: "COMING SOON", ar: "قريباً" }
+            : shown ? { en: "VIEW COURSES", ar: "شوف الكورسات" }
+            : { en: "NO MATCHING COURSES", ar: "مفيش كورسات مطابقة" };
+        const count = { en: `${all.length} COURSES`, ar: `${all.length} كورس` };
+        const tag = (n, type) => n ? `<span class="badge ${type}" data-en="${n} ${TYPE[type].en}" data-ar="${n} ${TYPE[type].ar}">${n} ${TYPE[type].en}</span>` : "";
         return `
-        <article class="course-card category-card${n ? "" : " soon"}"${n ? ` tabindex="0" role="button" data-group="${g.id}"` : ""}>
+        <article class="course-card category-card${shown ? "" : " soon"}"${shown ? ` tabindex="0" role="button" data-group="${g.id}"` : ""}>
             <div class="course-top"><span class="course-number">0${i + 1}</span><span class="course-icon">${g.icon}</span></div>
             <div class="course-art"><span class="art-symbol">${g.symbol}</span><span class="art-code">${g.code}</span></div>
             <div class="course-info">
                 <span class="course-category" ${attrs(count)}>${count.en}</span>
                 <h3 ${attrs(g.title)}>${g.title.en}</h3>
+                <div class="course-meta">${tag(free, "free")}${tag(paid, "paid")}</div>
                 <p ${attrs(g.desc)}>${g.desc.en}</p>
                 <span class="course-link"><span ${attrs(link)}>${link.en}</span><span>↗</span></span>
             </div>
@@ -55,11 +63,13 @@ function categoryCards() {
     }).join("");
 }
 
-function renderCourses(filter = "all") {
-    document.getElementById("courseFilters").style.display = activeGroup ? "" : "none";
+function renderCourses() {
+    document.getElementById("catBack").style.display = activeGroup ? "" : "none";
+    document.querySelectorAll("#courseFilters [data-filter]").forEach(x => x.classList.toggle("active", x.dataset.filter === activeFilter));
     const grid = document.getElementById("coursesGrid");
     if (!activeGroup) { grid.innerHTML = categoryCards(); return; }
-    grid.innerHTML = COURSES.filter(c => c.group === activeGroup && (filter === "all" || c.type === filter)).map((c, i) => `
+    const list = COURSES.filter(c => c.group === activeGroup && matches(c));
+    grid.innerHTML = list.length ? list.map((c, i) => `
         <article class="course-card${c.featured ? " featured-card" : ""}" tabindex="0" role="button" data-course="${c.id}">
             <div class="course-top"><span class="course-number">0${i + 1}</span><span class="course-icon">${c.icon}</span></div>
             <div class="course-art"><span class="art-symbol">${c.symbol}</span><span class="art-code">${c.code}</span></div>
@@ -70,13 +80,13 @@ function renderCourses(filter = "all") {
                 <p ${attrs(c.desc)}>${c.desc.en}</p>
                 <span class="course-link"><span data-en="VIEW DETAILS" data-ar="التفاصيل">VIEW DETAILS</span><span>↗</span></span>
             </div>
-        </article>`).join("");
+        </article>`).join("")
+        : `<p class="grid-empty" data-en="No courses match this filter." data-ar="مفيش كورسات مطابقة للفلتر ده.">No courses match this filter.</p>`;
 }
 
 function setGroup(id) {
     activeGroup = id;
-    document.querySelectorAll("#courseFilters [data-filter]").forEach(x => x.classList.toggle("active", x.dataset.filter === "all"));
-    renderCourses("all");
+    renderCourses();
     setLanguage(currentLang());
     document.getElementById("courses").scrollIntoView();
 }
@@ -142,7 +152,7 @@ document.getElementById("contactButton").addEventListener("click", e => {
 document.getElementById("courseFilters").addEventListener("click", e => {
     const chip = e.target.closest("[data-filter]");
     if (!chip) return;
-    document.querySelectorAll("#courseFilters [data-filter]").forEach(x => x.classList.toggle("active", x === chip));
-    renderCourses(chip.dataset.filter);
+    activeFilter = chip.dataset.filter;
+    renderCourses();
     setLanguage(currentLang());
 });
